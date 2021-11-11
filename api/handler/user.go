@@ -28,6 +28,16 @@ func NewUserHandler(repo user.UserRepo, auth auth.Auth, mail mail.Mail) *UserHan
 	}
 }
 
+// Signup
+// @Summary Create a new user
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param data body	models.User	true	"data"
+// @Success 200 {string} string	"successfully note created"
+// @Failure 400 {string} string
+// @Failure 500 {string} string
+// @Router	/user/signup	[post]
 func (p *UserHandler) Signup(w http.ResponseWriter, r *http.Request) {
 	t := models.User{}
 
@@ -61,6 +71,16 @@ func (p *UserHandler) Signup(w http.ResponseWriter, r *http.Request) {
 	RespondWithJSON(w, http.StatusOK, "successfully user created")
 }
 
+// Signin
+// @Summary Sign in user
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param data body	models.User	true	"data"
+// @Success 200 {string} string	"successfully note created"
+// @Failure 400 {string} string
+// @Failure 500 {string} string
+// @Router	/user/signin	[post]
 func (p *UserHandler) Signin(w http.ResponseWriter, r *http.Request) {
 	t := models.Credentials{}
 
@@ -84,6 +104,14 @@ func (p *UserHandler) Signin(w http.ResponseWriter, r *http.Request) {
 	RespondWithJSON(w, http.StatusOK, token+";"+b64.StdEncoding.EncodeToString([]byte(id)))
 }
 
+// Welcome
+// @Summary Check the token
+// @Tags User
+// @Accept json
+// @Produce json
+// @Success 200 {string} string
+// @Failure 404 {string} string
+// @Router	/user/welcome	[get]
 func (p *UserHandler) Welcome(w http.ResponseWriter, r *http.Request) {
 	v, httpStatus, err := p.auth.TokenValidation(r, true)
 
@@ -95,6 +123,15 @@ func (p *UserHandler) Welcome(w http.ResponseWriter, r *http.Request) {
 	RespondWithJSON(w, http.StatusOK, "Welcome to quick-note")
 }
 
+// Reset
+// @Summary Re-set the user password
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param   userEmail	path	string	true	"email"
+// @Success 200 {string} string
+// @Failure 404 {string} string
+// @Router	/user/reset/{userEmail}	[get]
 func (p *UserHandler) Reset(w http.ResponseWriter, r *http.Request) {
 	bMail, _ := b64.StdEncoding.DecodeString(chi.URLParam(r, "userEmail"))
 	uMail := string(bMail)
@@ -124,6 +161,15 @@ func (p *UserHandler) Reset(w http.ResponseWriter, r *http.Request) {
 	RespondWithJSON(w, http.StatusOK, "token sent to email")
 }
 
+// Verification
+// @Summary verify the user email
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param   userEmail	path	string	true	"email"
+// @Success 200 {string} string
+// @Failure 404 {string} string
+// @Router	/user/verification/{userEmail}	[get]
 func (p *UserHandler) Verification(w http.ResponseWriter, r *http.Request) {
 	v, httpStatus, err := p.auth.TokenValidation(r, false)
 	if !v {
@@ -142,6 +188,17 @@ func (p *UserHandler) Verification(w http.ResponseWriter, r *http.Request) {
 	RespondWithJSON(w, http.StatusOK, "successfully email verified")
 }
 
+// UpdateUser
+// @Summary Update the user
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param   id	path	string	true	"ID"
+// @Param data body	models.User	true	"data"
+// @Success 200 {string} string	"successfully note created"
+// @Failure 400 {string} string
+// @Failure 500 {string} string
+// @Router	/user/{id}	[put]
 func (p *UserHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	v, httpStatus, err := p.auth.TokenValidation(r, true)
 	if !v {
