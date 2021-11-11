@@ -38,16 +38,19 @@ func NewUserRepo(db *gorm.DB) *User {
 }
 
 func (u *User) Save(user *models.User) error {
+	if result := u.db.Create(&user); result.Error != nil {
+		log.Errorf("failed to create user: %+v: %v", u, result.Error)
+		return result.Error
+	}
+
 	passwordString, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.MinCost)
-	pws := fmt.Sprintf("%s", passwordString)
-	fmt.Println(pws)
 	if err != nil {
 		log.Panic(err)
 	}
-	user.Password = pws
+	user.Password = string(passwordString)
 	user.Verification = false
-	if result := u.db.Create(&user); result.Error != nil {
-		log.Errorf("failed to create user: %+v: %v", u, result.Error)
+	if result := u.db.Save(&user); result.Error != nil {
+		log.Errorf("failed to update user pw and varification: %+v: %v", u, result.Error)
 		return result.Error
 	}
 
