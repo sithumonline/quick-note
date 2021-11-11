@@ -59,14 +59,19 @@ func (u *User) Save(user *models.User) error {
 }
 
 func (u *User) Update(user *models.User, id string) error {
-	//if !reflect.ValueOf(user.Password).IsNil() {
-	passwordString, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.MinCost)
-	if err != nil {
-		log.Panic(err)
+	p, e := u.GetPasswordByEmail(&models.Credentials{Email: user.Email}, false)
+	if e != nil {
+		return e
 	}
-	user.Password = string(passwordString)
-	fmt.Println("Update PW : " + user.Password)
-	//}
+	err := bcrypt.CompareHashAndPassword([]byte(p), []byte(user.Password))
+	if err != nil {
+		passwordString, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.MinCost)
+		if err != nil {
+			log.Panic(err)
+		}
+		user.Password = string(passwordString)
+		fmt.Println("Update PW : " + user.Password)
+	}
 	if result := u.db.Model(&user).Where("id = ?", id).Updates(user); result.Error != nil {
 		log.Errorf("failed to update user: %+v: %v", u, result.Error)
 		return result.Error
