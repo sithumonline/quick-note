@@ -28,7 +28,7 @@ import (
 // @contact.name Golang Sri Lanka
 // @contact.email golangsrilanka@mail.com
 
-// @host golangsrilanka.github.io/quick-note
+// @host quick-note-api-x.herokuapp.com
 // @BasePath /api/v1
 
 var RunServerCmd = &cobra.Command{
