@@ -21,7 +21,7 @@ type UserRepo interface {
 	GetTokenByCred(cred *models.Credentials) (string, error)
 	Migrate() error
 	GetTokenWithoutCred(cred *models.Credentials, verification bool) (string, error)
-	Update(user *models.User, id string) error
+	Update(user *models.User, id string, verification bool) error
 	Verification(cred *models.Credentials) error
 	GetUserByEmail(cred *models.Credentials) (*models.User, error)
 	GetIdByEmail(cred *models.Credentials, verification bool) (string, error)
@@ -58,13 +58,8 @@ func (u *User) Save(user *models.User) error {
 	return nil
 }
 
-func (u *User) Update(user *models.User, id string) error {
-	p, e := u.GetPasswordByEmail(&models.Credentials{Email: user.Email}, false)
-	if e != nil {
-		return e
-	}
-	err := bcrypt.CompareHashAndPassword([]byte(p), []byte(user.Password))
-	if err != nil {
+func (u *User) Update(user *models.User, id string, updatePassword bool) error {
+	if updatePassword {
 		passwordString, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.MinCost)
 		if err != nil {
 			log.Panic(err)
@@ -87,7 +82,7 @@ func (u *User) Verification(cred *models.Credentials) error {
 	}
 	user.Verification = true
 
-	err = u.Update(user, user.ID.String())
+	err = u.Update(user, user.ID.String(), false)
 	if err != nil {
 		return err
 	}

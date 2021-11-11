@@ -214,7 +214,7 @@ func (p *UserHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := p.repo.Update(&t, ID); err != nil {
+	if err := p.repo.Update(&t, ID, true); err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
