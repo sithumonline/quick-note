@@ -1,4 +1,4 @@
-# go-puso
+# quick-note
 
 ![pusa](https://media1.tenor.com/images/7ff624893dbbc66b7b496c95fb020278/tenor.gif?itemid=13131512)
 
@@ -21,7 +21,7 @@ _Golang project template form Golang Sri Lanka_
     │   └── maths
     ├── scripts
     └── transact
-       └── puso
+       └── note
     ├── config.yml
     ├── Dockerfile
     ├── docker-compose.yaml

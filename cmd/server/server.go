@@ -8,33 +8,33 @@ import (
 	"time"
 
 	chiPrometheus "github.com/766b/chi-prometheus"
-	"github.com/GolangSriLanka/go-puso/database"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	log "github.com/sirupsen/logrus"
+	"github.com/sithumonline/quick-note/database"
 	"github.com/spf13/cobra"
 	httpSwagger "github.com/swaggo/http-swagger"
 
-	"github.com/GolangSriLanka/go-puso/api/router"
-	"github.com/GolangSriLanka/go-puso/config"
-	_ "github.com/GolangSriLanka/go-puso/docs"
+	"github.com/sithumonline/quick-note/api/router"
+	"github.com/sithumonline/quick-note/config"
+	_ "github.com/sithumonline/quick-note/docs"
 )
 
-// @title Go Puso
+// @title Go Note
 // @version 0.0.1
 // @description Golang Sri Lanka template repo
 
 // @contact.name Golang Sri Lanka
 // @contact.email golangsrilanka@mail.com
 
-// @host golangsrilanka.github.io/go-puso
+// @host golangsrilanka.github.io/quick-note
 // @BasePath /api/v1
 
 var RunServerCmd = &cobra.Command{
 	Use:   "server",
-	Short: "start go-puso server",
+	Short: "start quick-note server",
 	Run: func(cmd *cobra.Command, args []string) {
 		Run()
 	},
@@ -59,7 +59,7 @@ func Serve(ctx context.Context, r *chi.Mux) (err error) {
 		}
 	}()
 
-	log.Println("Server running on port" + port)
+	log.Println("Server running on port " + port)
 	<-ctx.Done()
 	log.Println("Server is starting to shutdown....")
 
@@ -97,7 +97,7 @@ func Run() {
 
 	port := config.GetEnv("server.PORT")
 
-	r.Use(chiPrometheus.NewMiddleware("go-puso"))
+	r.Use(chiPrometheus.NewMiddleware("quick-note"))
 	r.Handle("/metrics", promhttp.Handler())
 	r.Mount("/swagger", httpSwagger.Handler(
 		httpSwagger.URL("http://localhost:"+port+"/swagger/doc.json"),

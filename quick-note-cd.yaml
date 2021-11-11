@@ -6,7 +6,7 @@ metadata:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: go-puso-config
+  name: quick-note-config
   namespace: development
 data:
   config.yaml: |
@@ -14,47 +14,47 @@ data:
       PORT: 3000
     database:
       URL: "postgres://<url>"
-    go-puso:
+    quick-note:
       VERSION: "0.0.1"
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: go-puso
+  name: quick-note
   namespace: development
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: go-puso-server
+      run: quick-note-server
   template:
     metadata:
       labels:
-        run: go-puso-server
+        run: quick-note-server
     spec:
       containers:
-        - name: go-puso
-          image: ghcr.io/golangsrilanka/go-puso:latest
+        - name: quick-note
+          image: ghcr.io/sithumonline/quick-note:latest
           args: ["server"]
           volumeMounts:
-            - name: go-puso-config-volume
+            - name: quick-note-config-volume
               mountPath: /app/config.yaml
               subPath: config.yaml
               readOnly: true
       volumes:
-        - name: go-puso-config-volume
+        - name: quick-note-config-volume
           configMap:
-            name: go-puso-config
+            name: quick-note-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: go-puso-entrypoint
+  name: quick-note-entrypoint
   namespace: development
 spec:
   type: NodePort
   selector:
-    run: go-puso-server
+    run: quick-note-server
   ports:
     - port: 3000
       targetPort: 3000

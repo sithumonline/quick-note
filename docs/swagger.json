@@ -9,7 +9,7 @@
                 "summary": "Returns health of the service"
             }
         },
-        "/puso": {
+        "/note": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -18,16 +18,16 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Puso"
+                    "Note"
                 ],
-                "summary": "Get puso list",
+                "summary": "Get note list",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/puso.Puso"
+                                "$ref": "#/definitions/note.Note"
                             }
                         }
                     },
@@ -47,9 +47,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Puso"
+                    "Note"
                 ],
-                "summary": "Create a new puso",
+                "summary": "Create a new note",
                 "parameters": [
                     {
                         "description": "data",
@@ -57,13 +57,13 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/puso.Puso"
+                            "$ref": "#/definitions/note.Note"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "successfully puso created",
+                        "description": "successfully note created",
                         "schema": {
                             "type": "string"
                         }
@@ -83,7 +83,7 @@
                 }
             }
         },
-        "/puso/{id}": {
+        "/note/{id}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -92,9 +92,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Puso"
+                    "Note"
                 ],
-                "summary": "Get puso",
+                "summary": "Get note",
                 "parameters": [
                     {
                         "type": "string",
@@ -108,7 +108,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/puso.Puso"
+                            "$ref": "#/definitions/note.Note"
                         }
                     },
                     "404": {
@@ -120,7 +120,7 @@
                 }
             },
             "put": {
-                "description": "Update puso",
+                "description": "Update note",
                 "consumes": [
                     "application/json"
                 ],
@@ -128,9 +128,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Puso"
+                    "Note"
                 ],
-                "summary": "Update puso",
+                "summary": "Update note",
                 "parameters": [
                     {
                         "type": "string",
@@ -169,9 +169,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Puso"
+                    "Note"
                 ],
-                "summary": "Delete puso",
+                "summary": "Delete note",
                 "parameters": [
                     {
                         "type": "string",
@@ -199,7 +199,7 @@
         }
     },
     "definitions": {
-        "puso.Puso": {
+        "note.Note": {
             "type": "object",
             "properties": {
                 "color": {

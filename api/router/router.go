@@ -23,7 +23,8 @@ func NewRouter(db *gorm.DB) *Router {
 func (o *Router) Route() chi.Router {
 	r := chi.NewRouter()
 
-	r.Mount("/puso", o.PusoRouter())
+	r.Mount("/note", o.NoteRouter())
+	r.Mount("/user", o.UserRouter())
 
 	return r
 }
