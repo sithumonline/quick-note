@@ -68,6 +68,17 @@ func (p *Note) Delete(id string, uid string) error {
 }
 
 func (p *Note) Update(note *models.Note, id string, uid string) error {
+	if !note.Public {
+		if result := p.db.Model(&note).Where("id = ? AND user_id = ?", id, uid).Updates(map[string]interface{}{
+			"public": false,
+		}); result.Error != nil {
+			log.Errorf("failed to update note: %+v: %v", p, result.Error)
+			return result.Error
+		}
+
+		return nil
+	}
+
 	if result := p.db.Model(&note).Where("id = ? AND user_id = ?", id, uid).Updates(note); result.Error != nil {
 		log.Errorf("failed to update note: %+v: %v", p, result.Error)
 		return result.Error
