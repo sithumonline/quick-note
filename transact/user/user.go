@@ -47,6 +47,7 @@ func (u *User) Save(user *models.User) error {
 	if err != nil {
 		log.Panic(err)
 	}
+	fmt.Println(string(passwordString))
 	user.Password = string(passwordString)
 	user.Verification = false
 	if result := u.db.Save(&user); result.Error != nil {
