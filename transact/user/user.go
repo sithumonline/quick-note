@@ -39,6 +39,7 @@ func NewUserRepo(db *gorm.DB) *User {
 
 func (u *User) Save(user *models.User) error {
 	passwordString, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.MinCost)
+	fmt.Println(string(passwordString))
 	if err != nil {
 		log.Panic(err)
 	}
