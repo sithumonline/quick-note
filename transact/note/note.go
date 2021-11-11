@@ -28,7 +28,6 @@ func NewNoteRepo(db *gorm.DB) *Note {
 }
 
 func (p *Note) Save(note *models.Note) error {
-	p.Migrate()
 	if result := p.db.Create(&note); result.Error != nil {
 		log.Errorf("failed to create note: %+v: %v", p, result.Error)
 		return result.Error

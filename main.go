@@ -1,7 +1,7 @@
 package main
 
-import "github.com/sithumonline/quick-note/cmd"
+import "github.com/sithumonline/quick-note/cmd/server"
 
 func main() {
-	cmd.Execute()
+	server.Run()
 }

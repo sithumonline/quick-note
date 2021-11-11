@@ -1,0 +1,14 @@
+server:
+  PORT: 4000
+
+quick-note:
+  VERSION: "0.0.1"
+
+mail:
+  sender: "ebonynon@yandex.com"
+  host: "smtp.yandex.com"
+  port: 465
+
+frontend:
+#  url: "http://localhost:3000/"
+  url: "https://noteq.vercel.app/"

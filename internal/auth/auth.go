@@ -3,13 +3,13 @@ package auth
 import (
 	"errors"
 	"net/http"
+	"os"
 
 	"gorm.io/gorm"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/sithumonline/quick-note/transact/user"
 
-	"github.com/sithumonline/quick-note/config"
 	"github.com/sithumonline/quick-note/models"
 )
 
@@ -24,7 +24,7 @@ func NewAuth(db *gorm.DB) *Auth {
 }
 
 func (a *Auth) TokenValidation(r *http.Request, verification bool) (bool, int, error) {
-	jwtKey := []byte(config.GetEnv("secret.key"))
+	jwtKey := []byte(os.Getenv("SECRET_KEY"))
 	tknStr := r.Header.Get("Authorization")
 
 	if len(tknStr) == 0 {
