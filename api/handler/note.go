@@ -28,11 +28,12 @@ func NewNoteHandler(repo note.NoteRepo, auth auth.Auth) *NoteHandler {
 // @Tags Note
 // @Accept json
 // @Produce json
-// @Param data body	note.Note	true	"data"
+// @Param   id	path	string	true	"ID"
+// @Param data body	models.Note	true	"data"
 // @Success 200 {string} string	"successfully note created"
 // @Failure 400 {string} string
 // @Failure 500 {string} string
-// @Router	/note	[post]
+// @Router	/note/{id}	[post]
 func (p *NoteHandler) CreateNote(w http.ResponseWriter, r *http.Request) {
 	v, httpStatus, err := p.auth.TokenValidation(r, true)
 	if !v {
@@ -60,9 +61,10 @@ func (p *NoteHandler) CreateNote(w http.ResponseWriter, r *http.Request) {
 // @Tags Note
 // @Accept json
 // @Produce json
-// @Success 200 {object} []note.Note
+// @Param   id	path	string	true	"ID"
+// @Success 200 {object} []models.Note
 // @Failure 404 {string} string
-// @Router	/note	[get]
+// @Router	/note/{id}	[get]
 func (p *NoteHandler) NoteList(w http.ResponseWriter, r *http.Request) {
 	v, httpStatus, err := p.auth.TokenValidation(r, true)
 	if !v {
@@ -86,9 +88,10 @@ func (p *NoteHandler) NoteList(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Param   id	path	string	true	"ID"
-// @Success 200 {object} note.Note
+// @Param   id	path	string	true	"ID"
+// @Success 200 {object} models.Note
 // @Failure 404 {string} string
-// @Router /note/{id} [get]
+// @Router /note/{id}/{id} [get]
 func (p *NoteHandler) GetNote(w http.ResponseWriter, r *http.Request) {
 	ID := chi.URLParam(r, "id")
 	userID := chi.URLParam(r, "userId")
@@ -117,9 +120,10 @@ func (p *NoteHandler) GetNote(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Param   id	path	string	true	"ID"
+// @Param   id	path	string	true	"ID"
 // @Success 200 {nil}	nil
 // @Failure 404 {string}	string
-// @Router /note/{id} [delete]
+// @Router /note/{id}/{id} [delete]
 func (p *NoteHandler) DeleteNote(w http.ResponseWriter, r *http.Request) {
 	v, httpStatus, err := p.auth.TokenValidation(r, true)
 	if !v {
@@ -144,10 +148,11 @@ func (p *NoteHandler) DeleteNote(w http.ResponseWriter, r *http.Request) {
 // @Accept  json
 // @Produce  json
 // @Param   id	path	string	true	"ID"
+// @Param   id	path	string	true	"ID"
 // @Success 200 {string} string	"successfully updated"
 // @Failure 400 {string} string
 // @Failure 404 {string} string
-// @Router /note/{id} [put]
+// @Router /note/{id}/{id} [put]
 func (p *NoteHandler) UpdateNote(w http.ResponseWriter, r *http.Request) {
 	v, httpStatus, err := p.auth.TokenValidation(r, true)
 	if !v {
