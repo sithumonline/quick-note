@@ -38,7 +38,10 @@ func NewUserRepo(db *gorm.DB) *User {
 }
 
 func (u *User) Save(user *models.User) error {
-	passwordString, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.MinCost)
+	passwordString, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.MinCost)
+	if err != nil {
+		log.Panic(err)
+	}
 	user.Password = string(passwordString)
 	user.Verification = false
 	if result := u.db.Create(&user); result.Error != nil {
@@ -51,7 +54,10 @@ func (u *User) Save(user *models.User) error {
 
 func (u *User) Update(user *models.User, id string) error {
 	if user.Password != "" {
-		passwordString, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.MinCost)
+		passwordString, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.MinCost)
+		if err != nil {
+			log.Panic(err)
+		}
 		user.Password = string(passwordString)
 	}
 	if result := u.db.Model(&user).Where("id = ?", id).Updates(user); result.Error != nil {
@@ -119,8 +125,7 @@ func (u *User) GetTokenByCred(cred *models.Credentials) (string, error) {
 	if p == "" {
 		return "", errors.New(fmt.Sprintf("password not found for %v", cred.Email))
 	}
-	passwordString, _ := bcrypt.GenerateFromPassword([]byte(cred.Password), bcrypt.MinCost)
-	err := bcrypt.CompareHashAndPassword(passwordString, []byte(cred.Password))
+	err := bcrypt.CompareHashAndPassword([]byte(p), []byte(cred.Password))
 	if err != nil {
 		return "", err
 	}
