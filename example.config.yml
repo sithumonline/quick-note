@@ -4,5 +4,5 @@ server:
 database:
   URL: "postgres://<url>"
 
-go-puso:
+quick-note:
   VERSION: "0.0.1"

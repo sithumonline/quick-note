@@ -1,10 +1,11 @@
 package database
 
 import (
-	"github.com/GolangSriLanka/go-puso/config"
-	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+
+	log "github.com/sirupsen/logrus"
+	"github.com/sithumonline/quick-note/config"
 )
 
 func Database() *gorm.DB {

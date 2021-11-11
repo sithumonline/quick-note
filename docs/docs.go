@@ -29,7 +29,7 @@ var doc = `{
                 "summary": "Returns health of the service"
             }
         },
-        "/puso": {
+        "/note": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -38,16 +38,16 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Puso"
+                    "Note"
                 ],
-                "summary": "Get puso list",
+                "summary": "Get note list",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/puso.Puso"
+                                "$ref": "#/definitions/note.Note"
                             }
                         }
                     },
@@ -67,9 +67,9 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Puso"
+                    "Note"
                 ],
-                "summary": "Create a new puso",
+                "summary": "Create a new note",
                 "parameters": [
                     {
                         "description": "data",
@@ -77,13 +77,13 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/puso.Puso"
+                            "$ref": "#/definitions/note.Note"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "successfully puso created",
+                        "description": "successfully note created",
                         "schema": {
                             "type": "string"
                         }
@@ -103,7 +103,7 @@ var doc = `{
                 }
             }
         },
-        "/puso/{id}": {
+        "/note/{id}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -112,9 +112,9 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Puso"
+                    "Note"
                 ],
-                "summary": "Get puso",
+                "summary": "Get note",
                 "parameters": [
                     {
                         "type": "string",
@@ -128,7 +128,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/puso.Puso"
+                            "$ref": "#/definitions/note.Note"
                         }
                     },
                     "404": {
@@ -140,7 +140,7 @@ var doc = `{
                 }
             },
             "put": {
-                "description": "Update puso",
+                "description": "Update note",
                 "consumes": [
                     "application/json"
                 ],
@@ -148,9 +148,9 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Puso"
+                    "Note"
                 ],
-                "summary": "Update puso",
+                "summary": "Update note",
                 "parameters": [
                     {
                         "type": "string",
@@ -189,9 +189,9 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Puso"
+                    "Note"
                 ],
-                "summary": "Delete puso",
+                "summary": "Delete note",
                 "parameters": [
                     {
                         "type": "string",
@@ -219,7 +219,7 @@ var doc = `{
         }
     },
     "definitions": {
-        "puso.Puso": {
+        "note.Note": {
             "type": "object",
             "properties": {
                 "color": {
