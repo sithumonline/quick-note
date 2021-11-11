@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"reflect"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -47,7 +48,7 @@ func (u *User) Save(user *models.User) error {
 	if err != nil {
 		log.Panic(err)
 	}
-	fmt.Println(string(passwordString))
+	//fmt.Println(string(passwordString))
 	user.Password = string(passwordString)
 	user.Verification = false
 	if result := u.db.Save(&user); result.Error != nil {
@@ -59,7 +60,7 @@ func (u *User) Save(user *models.User) error {
 }
 
 func (u *User) Update(user *models.User, id string) error {
-	if user.Password != "" {
+	if !reflect.ValueOf(user.Password).IsNil() {
 		passwordString, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.MinCost)
 		if err != nil {
 			log.Panic(err)
