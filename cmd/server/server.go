@@ -18,7 +18,6 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 
 	"github.com/sithumonline/quick-note/api/router"
-	"github.com/sithumonline/quick-note/config"
 	_ "github.com/sithumonline/quick-note/docs"
 )
 
@@ -41,7 +40,7 @@ var RunServerCmd = &cobra.Command{
 }
 
 func Serve(ctx context.Context, r *chi.Mux) (err error) {
-	port := config.GetEnv("server.PORT")
+	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
@@ -95,7 +94,7 @@ func Run() {
 		MaxAge:           300,
 	}))
 
-	port := config.GetEnv("server.PORT")
+	port := os.Getenv("PORT")
 
 	r.Use(chiPrometheus.NewMiddleware("quick-note"))
 	r.Handle("/metrics", promhttp.Handler())

@@ -3,6 +3,7 @@ package user
 import (
 	"errors"
 	"fmt"
+	"os"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -11,7 +12,6 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/sithumonline/quick-note/config"
 	"github.com/sithumonline/quick-note/models"
 )
 
@@ -135,7 +135,7 @@ func (u *User) GetTokenByCred(cred *models.Credentials) (string, error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	jwtKey := []byte(config.GetEnv("secret.key"))
+	jwtKey := []byte(os.Getenv("SECRET_KEY"))
 	tokenString, err := token.SignedString(jwtKey)
 	if err != nil {
 		return "", err
@@ -163,7 +163,7 @@ func (u *User) GetTokenWithoutCred(cred *models.Credentials, verification bool) 
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	jwtKey := []byte(config.GetEnv("secret.key"))
+	jwtKey := []byte(os.Getenv("SECRET_KEY"))
 	tokenString, err := token.SignedString(jwtKey)
 	if err != nil {
 		return "", err

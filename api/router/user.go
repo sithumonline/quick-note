@@ -1,6 +1,7 @@
 package router
 
 import (
+	"os"
 	"strconv"
 
 	"github.com/go-chi/chi"
@@ -22,7 +23,7 @@ func (o Router) UserRouter() chi.Router {
 		SenderAddress: config.GetEnv("mail.sender"),
 		SmtpHost:      config.GetEnv("mail.host"),
 		SmtpPort:      port,
-		SmtpPassword:  config.GetEnv("mail.password"),
+		SmtpPassword:  os.Getenv("MAIL_PW"),
 	}
 	userHandler := handler.NewUserHandler(user.NewUserRepo(o.db), *auth.NewAuth(o.db), *mail.NewMail(m))
 
