@@ -52,7 +52,7 @@ func (a *Auth) TokenValidation(r *http.Request, verification bool) (bool, int, e
 
 	userRepo := user.NewUserRepo(a.db)
 
-	p, err := userRepo.GetPasswordByEmail(&models.Credentials{Email: claims.Email, Password: claims.Password}, verification)
+	p, err := userRepo.GetPasswordByEmail(&models.Credentials{Email: claims.Email}, verification)
 
 	if err != nil {
 		return false, http.StatusUnauthorized, err
